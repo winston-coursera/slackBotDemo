@@ -1,0 +1,17 @@
+{
+  "name": "learners_club_0806",
+  "version": "1.0.0",
+  "description": "why not?",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/client": "^4.3.1",
+    "dotenv": "^6.0.0",
+    "similar-english-words": "^1.0.0"
+  }
+}
