@@ -47,22 +47,29 @@ web.channels.list()
       const { text, channel } = event;
       const otherChannels = channelIds.filter(x => x !== channel);
 
-      otherChannels.forEach((currChannel) => {
-        const textArr = text.split(' ');
-        const randomStuff = randomKeyAndValue(textArr);
-        const wordsArr = words[randomStuff.value];
-
-        // nit: would probably make more sense to build a new string
-        //      array all together instead of modifying the original.
-        if (wordsArr && wordsArr.length) {
-          textArr[randomStuff.key] = randomKeyAndValue(wordsArr).value;
-        }
-
-        const newString = textArr.join(' ');
-
-        rtm.sendMessage(`Hey, I think someone said something along the lines of "${newString}" in another room but I am also not really sure and also I am not a bot.`, currChannel)
-          .catch(console.error);
-      });
+      // make sure there are, in fact, other channels.
+      if (otherChannels.length) {
+        otherChannels.forEach((currChannel) => {
+          const textArr = text.split(' ');
+          const randomStuff = randomKeyAndValue(textArr);
+          const wordsArr = words[randomStuff.value];
+  
+          // nit: would probably make more sense to build a new string
+          //      array all together instead of modifying the original.
+          if (wordsArr && wordsArr.length) {
+            textArr[randomStuff.key] = randomKeyAndValue(wordsArr).value;
+          }
+  
+          const newString = textArr.join(' ');
+  
+          rtm.sendMessage(`Hey, I think someone said something along the lines of "${newString}" in another room but I am also not really sure and also I am not a bot.`, currChannel)
+            .catch(console.error);
+        });
+      } else {
+        rtm.sendMessage(`Plz add me to another channel so I can be annoying there ok?`, channel)
+            .catch(console.error);
+      }
+      
     });
   })
   .catch(console.error);
